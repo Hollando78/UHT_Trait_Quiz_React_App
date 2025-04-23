@@ -110,10 +110,11 @@ const Quiz = () => {
     <div className="quiz-container">
       <h2 className="quiz-title">Question {questionNum} / 10</h2>
       <img
-        src={`/icons/Icon${question.icon}.png`}
-        alt="UHT Trait Icon"
-        className="quiz-icon"
-      />
+  src={`${import.meta.env.BASE_URL}icons/Icon${question.icon}.png`}
+  alt="UHT Trait Icon"
+  className="quiz-icon"
+/>
+
       <div className="quiz-grid">
         {question.options.map((i) => (
           <motion.div

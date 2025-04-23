@@ -110,7 +110,7 @@ const Quiz = () => {
     <div className="quiz-container">
       <h2 className="quiz-title">Question {questionNum} / 10</h2>
       <img
-        src={`https://universalhex.org/icons/Icon${question.icon}.png`}
+        src={`https://publish.obsidian.md/icons/Icon${question.icon}.png`}
         alt="UHT Trait Icon"
         className="quiz-icon"
       />

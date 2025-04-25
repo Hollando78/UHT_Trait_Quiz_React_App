@@ -110,7 +110,7 @@ const Quiz = () => {
 
   return (
     <div className="quiz-wrapper modern-font">
-      <div className="quiz-box">
+      <div className="quiz-box no-outline">
         {showResult ? (
           <>
             <h2 className="quiz-title">Quiz Complete!</h2>
@@ -124,7 +124,7 @@ const Quiz = () => {
             <img
               src={`${import.meta.env.BASE_URL}icons/Icon${question.icon}.png`}
               alt="UHT Trait Icon"
-              className="quiz-icon"
+              className="quiz-icon large"
             />
             <div className="quiz-grid">
               {question.options.map((i) => (
@@ -132,7 +132,7 @@ const Quiz = () => {
                   whileTap={{ scale: 0.95 }}
                   key={i}
                   onClick={() => handleAnswer(i)}
-                  className={`quiz-card fixed-size ${
+                  className={`quiz-card fixed-size narrow ${
                     selected !== null
                       ? i === question.correct
                         ? "correct"
@@ -149,7 +149,7 @@ const Quiz = () => {
           </>
         )}
       </div>
-      <div className="quiz-version">v1.0</div>
+      <div className="quiz-version">v1.1</div>
     </div>
   );
 };

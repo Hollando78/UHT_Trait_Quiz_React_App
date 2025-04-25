@@ -98,3 +98,29 @@
   font-size: 0.75rem;
   color: #9ca3af;
 }
+
+.fixed-size.narrow {
+    width: 100%;
+    max-width: 180px;
+    min-height: 80px;
+    margin: 0 auto;
+  }
+  
+  .quiz-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .quiz-icon.large {
+    width: 140px;
+    height: 140px;
+  }
+  
+  .no-outline {
+    box-shadow: none;
+    border: none;
+  }
+  

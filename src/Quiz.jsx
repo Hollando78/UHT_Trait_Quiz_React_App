@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import "./index.css";
 
@@ -49,13 +49,19 @@ const getRanking = (score) => {
   return rankings.find(r => ratio <= 1 && ratio >= r.score)?.title || "Initiate";
 };
 
-const getRandomTraitIndex = () => Math.floor(Math.random() * 32);
+const getShuffledTraitIndexes = (count = 10) => {
+  const indexes = Array.from({ length: 32 }, (_, i) => i);
+  for (let i = indexes.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [indexes[i], indexes[j]] = [indexes[j], indexes[i]];
+  }
+  return indexes.slice(0, count);
+};
 
-const generateQuestion = () => {
-  const correctIndex = getRandomTraitIndex();
+const generateQuestion = (correctIndex) => {
   const choices = new Set([correctIndex]);
   while (choices.size < 4) {
-    choices.add(getRandomTraitIndex());
+    choices.add(Math.floor(Math.random() * 32));
   }
   return {
     icon: correctIndex + 1,
@@ -65,11 +71,16 @@ const generateQuestion = () => {
 };
 
 const Quiz = () => {
-  const [question, setQuestion] = useState(generateQuestion());
+  const [traitSequence, setTraitSequence] = useState(getShuffledTraitIndexes());
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [question, setQuestion] = useState(generateQuestion(0));
   const [score, setScore] = useState(0);
-  const [questionNum, setQuestionNum] = useState(1);
   const [selected, setSelected] = useState(null);
   const [showResult, setShowResult] = useState(false);
+
+  useEffect(() => {
+    setQuestion(generateQuestion(traitSequence[currentIndex]));
+  }, [currentIndex, traitSequence]);
 
   const handleAnswer = (index) => {
     if (selected !== null) return;
@@ -78,22 +89,23 @@ const Quiz = () => {
       setScore(score + 1);
     }
     setTimeout(() => {
-      if (questionNum >= 10) {
+      if (currentIndex >= 9) {
         setShowResult(true);
       } else {
-        setQuestion(generateQuestion());
-        setQuestionNum(questionNum + 1);
+        setCurrentIndex(currentIndex + 1);
         setSelected(null);
       }
     }, 1000);
   };
 
   const restartQuiz = () => {
+    const newSequence = getShuffledTraitIndexes();
+    setTraitSequence(newSequence);
+    setCurrentIndex(0);
     setScore(0);
-    setQuestionNum(1);
-    setQuestion(generateQuestion());
     setSelected(null);
     setShowResult(false);
+    setQuestion(generateQuestion(newSequence[0]));
   };
 
   if (showResult) {
@@ -112,7 +124,7 @@ const Quiz = () => {
   return (
     <div className="quiz-wrapper">
       <div className="quiz-box">
-        <h2 className="quiz-title">Question {questionNum} / 10</h2>
+        <h2 className="quiz-title">Question {currentIndex + 1} / 10</h2>
         <img
           src={`${import.meta.env.BASE_URL}icons/Icon${question.icon}.png`}
           alt="UHT Trait Icon"

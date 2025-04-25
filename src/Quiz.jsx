@@ -108,49 +108,48 @@ const Quiz = () => {
     setQuestion(generateQuestion(newSequence[0]));
   };
 
-  if (showResult) {
-    return (
-      <div className="quiz-wrapper">
-        <div className="quiz-box">
-          <h2 className="quiz-title">Quiz Complete!</h2>
-          <p className="quiz-score">Score: {score} / 10</p>
-          <p className="quiz-ranking">You are a <strong>{getRanking(score / 10)}</strong></p>
-          <button className="quiz-button" onClick={restartQuiz}>Play Again</button>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="quiz-wrapper">
+    <div className="quiz-wrapper modern-font">
       <div className="quiz-box">
-        <h2 className="quiz-title">Question {currentIndex + 1} / 10</h2>
-        <img
-          src={`${import.meta.env.BASE_URL}icons/Icon${question.icon}.png`}
-          alt="UHT Trait Icon"
-          className="quiz-icon"
-        />
-        <div className="quiz-grid">
-          {question.options.map((i) => (
-            <motion.div
-              whileTap={{ scale: 0.95 }}
-              key={i}
-              onClick={() => handleAnswer(i)}
-              className={`quiz-card ${
-                selected !== null
-                  ? i === question.correct
-                    ? "correct"
-                    : i === selected
-                    ? "incorrect"
-                    : "disabled"
-                  : ""
-              }`}
-            >
-              {traits[i] || "(Unknown)"}
-            </motion.div>
-          ))}
-        </div>
+        {showResult ? (
+          <>
+            <h2 className="quiz-title">Quiz Complete!</h2>
+            <p className="quiz-score">Score: {score} / 10</p>
+            <p className="quiz-ranking">You are a <strong>{getRanking(score / 10)}</strong></p>
+            <button className="quiz-button" onClick={restartQuiz}>Play Again</button>
+          </>
+        ) : (
+          <>
+            <h2 className="quiz-title">Question {currentIndex + 1} / 10</h2>
+            <img
+              src={`${import.meta.env.BASE_URL}icons/Icon${question.icon}.png`}
+              alt="UHT Trait Icon"
+              className="quiz-icon"
+            />
+            <div className="quiz-grid">
+              {question.options.map((i) => (
+                <motion.div
+                  whileTap={{ scale: 0.95 }}
+                  key={i}
+                  onClick={() => handleAnswer(i)}
+                  className={`quiz-card fixed-size ${
+                    selected !== null
+                      ? i === question.correct
+                        ? "correct"
+                        : i === selected
+                        ? "incorrect"
+                        : "disabled"
+                      : ""
+                  }`}
+                >
+                  {traits[i] || "(Unknown)"}
+                </motion.div>
+              ))}
+            </div>
+          </>
+        )}
       </div>
+      <div className="quiz-version">v1.0</div>
     </div>
   );
 };

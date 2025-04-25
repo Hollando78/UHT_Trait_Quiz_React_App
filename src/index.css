@@ -76,3 +76,25 @@
     cursor: pointer;
   }
   
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+.modern-font {
+  font-family: 'Inter', sans-serif;
+}
+
+.fixed-size {
+  width: 100%;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+}
+
+.quiz-version {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 1rem;
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
